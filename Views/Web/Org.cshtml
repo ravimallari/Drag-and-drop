@@ -1,0 +1,84 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Org</title>
+</head>
+
+<body>
+    <nav id="ip1" style="border-color:#000000;">
+
+    </nav>
+    <br />
+        <div>
+            <input class="input1" type="text" name="name" />
+            <br />
+            <br />
+            <div>
+                <input id="input" type="submit" onclick="sendval()"/> &nbsp;&nbsp;
+                <button id="input" onclick="location.href='@Url.Action("Home", "Web")'">To List</button>
+            </div>
+        </div>
+</body>
+</html>
+<style>
+    .input1 {
+        color: #000000;
+        border-color: #000000;
+        border-style: solid;
+        width: 200px;
+        height: 20px;
+        border-radius: 5px;
+    }
+
+        .input1:hover {
+            border-color: #ff6a00;
+        }
+
+    #input {
+        color: #ffffff;
+        border-style: solid;
+        width: 75px;
+        height: 30px;
+        border-radius: 5px;
+        background-color: #000000;
+    }
+
+        #input:hover {
+            background-color: #ff6a00;
+        }
+</style>
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<script>
+    function sendval() {
+        var name = $(".input1").val();
+        var rootURL = '@Url.Content("~")';
+        $.ajax({
+            type: "POST",
+            url: rootURL + "Web/Org",
+            data: { name: name },
+            success: function () {
+                $("input:text").val("");
+                $(".input1").focus();
+            }
+            })
+    }
+    $(
+        function() {
+            var rootURL = '@Url.Content("~")';
+        $.ajax({
+            type: "GET",
+            url: rootURL + "Web/ip",
+            success: function (result) {
+                $("#ip1").html(result);
+            }
+            })
+        }
+    )
+</script>

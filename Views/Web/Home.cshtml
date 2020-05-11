@@ -1,0 +1,63 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<body>
+    <div id="topcars">
+    </div>
+</body>
+</html>
+<style>
+    .cls {
+        background: black;
+        color: #ffffff;
+        margin: 3px 0;
+        cursor: pointer;
+        width: 200px;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+        .cls:hover {
+            background: #ff6a00;
+        }
+</style>
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var rootURL = '@Url.Content("~")';
+        $.ajax({
+            type: "GET",
+            url: rootURL + "Web/List",
+            success: function (result) {
+                debugger;
+                var val = JSON.parse(result);
+                setdiv(val);
+            }
+        });
+
+        $("#topcars").sortable({
+            axis: "y",
+            handle: "div.car",
+            update: function (event, ui) {
+                var i = 0;
+                $('.car').each(function () {
+                    var text = $(this).html();
+                    var num = text.split(" ");
+                    var text1 = text.replace("position " + num[num.length - 1], "position " + i++);
+                    $(this).html(text1);
+                    debugger;
+                });
+            }
+        });
+    });
+    function setdiv(val) {
+        for (var i = 0; i < val.length; i++) {
+            var car = $('<div class="cls">' + '<div class="car">' + val[i]+' at position '+i+'</div>' + '</div>');
+            $('#topcars').append(car);
+            debugger;
+        }
+    }
+</script>
